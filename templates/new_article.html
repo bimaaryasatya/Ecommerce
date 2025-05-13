@@ -37,7 +37,7 @@
   </style>
 </head>
 <body>
-  {% include '_header.html' %}
+  {% include '_header_2.html' %}
   <div class="article">
     <h1 class="mb-4">Tutorial Laravel: Membuat Tabel & Konsep MVC</h1>
 
@@ -82,7 +82,8 @@
       php artisan make:controller ProductController
     </code></pre>
 
-    <h5>Contoh Controller:</h5>
+    <h5>Contoh Controller:</h5><br>
+    <p>Di sini kita juga akan membuat contoh fungsi CRUD suatu sistem pendataan produk 👇</p>
     <pre><code>
       class ProductController extends Controller
       {
@@ -94,12 +95,14 @@
               return view('dashboard.products.index', compact('products'));
           }
 
+          // Fungsi Menambahkan Produk
           public function create()
           {
               $categories = Categories::all();
               return view('dashboard.products.create', compact('categories'));
           }
 
+          // Fungsi Store/Menyimpan Produk
           public function store(Request $request)
           {
               $validated = $request->validate([
@@ -125,6 +128,7 @@
               return redirect()->route('dashboard.products.index')->with('success', 'Product created successfully.');
           }
 
+          // Fungsi Edit Produk
           public function edit($id)
           {
               $product = Product::findOrFail($id);
@@ -132,6 +136,7 @@
               return view('dashboard.products.edit', compact('product', 'categories'));
           }
 
+          // Fungsi Update Produk
           public function update(Request $request, $id)
           {
               $product = Product::findOrFail($id);
@@ -150,7 +155,8 @@
 
               return redirect()->route('dashboard.products.index')->with('success', 'Product updated successfully.');
           }
-
+          
+          // Fungsi Hapus Produk
           public function destroy($id)
           {
               $product = Product::findOrFail($id);
@@ -163,15 +169,16 @@
     </code></pre>
 
     <h5>4. Routing</h5>
-    <p>Contoh routing ada pada path routes/web.php 👈</p>
+    <p>Contoh routing ada pada path routes/web.php 👈<br>
+    Kita juga akan membuat routing untuk fungsi yang menuju ke controller</p>
     <pre><code>
      Route::resource('products', ProductController::class)->names([
-         'index' => 'dashboard.products.index',
-         'create' => 'dashboard.products.create',
-         'store' => 'dashboard.products.store',
-         'edit' => 'dashboard.products.edit',
-         'update' => 'dashboard.products.update',
-         'destroy' => 'dashboard.products.destroy',
+         'index' => 'dashboard.products.index', <!-- route ke index Product -->
+         'create' => 'dashboard.products.create', <!-- route ke halaman create Product -->
+         'store' => 'dashboard.products.store', <!-- route ke fungsi store Product -->
+         'edit' => 'dashboard.products.edit', <!-- route ke fungsi edit Product -->
+         'update' => 'dashboard.products.update', <!-- route ke halaman update Product -->
+         'destroy' => 'dashboard.products.destroy', <!-- route ke fungsi hapus Product -->
      ]);
     </code></pre>
 
@@ -180,6 +187,7 @@
     <p class="text-muted">Tutorial ini ditulis untuk membantu memahami dasar Laravel dengan struktur yang rapi dan terpisah melalui konsep MVC. Happy coding! 🚀✨🤩</p>
   </div>
 
+  {% include '_footer.html' %}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
